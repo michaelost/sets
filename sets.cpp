@@ -2,53 +2,56 @@
 #include <list>
 using namespace std;
 
-class Set{
-	public:
-	list<int> elements;
-	list<int>::iterator p;
-	Set(){	
-		p = elements.begin();
+class Set{				// множина
+	public:				// модифікатор доступу 
+	list<int> elements;	//  slt - list структура, поле класу set (список)
+	list<int>::iterator p;	// ітератор попереднього поля(через нього ми проходим по всьому списку)
+	Set(){					// функція конструктор викликається під час ініціалізації екземпляру класу
+		p = elements.begin();	// встановлюється ітератор в початок списку
 	};
-	void describe(){
-		p = elements.begin();
-		while(p!=elements.end()){
-			cout <<*p<<endl;
-			p++;
+	void describe(){		// функція виведення 
+		p = elements.begin();	// встановлюється ітератор в початок списку
+		while(p!=elements.end()){ // поки не кінець
+			cout <<*p<<endl;  // вивести елемент
+			p++;				// переставити ітератор на наступну комірку
 		}
 
 	};
-	void insert(int x){
+	void insert(int x){  // додавання елементу
 		p = elements.begin();
-		bool flag = false;
-		while(p!= elements.end()){
-			if(*p == x) {
-				flag = true;
+		bool flag = false; 	// прапорець що показуватиме чи є в списку такий елемент, ми
+		// ми ж не хочемо щоб елементи дублювались
+		while(p!= elements.end()){	// поки ітератор не сказує на кінець
+			if(*p == x) {	 // якщо елемент списку = х
+				flag = true; // елемент з таким значенням знайдено
 			}
-			p++;
+			p++;  // ітератор далі
 			
 		}
-		if(!flag) elements.insert(p,x);
+		if(!flag) elements.insert(p,x); 	// якщо не було знайдено елемент в списку додаєм в список
 		
 	};
-	Set setUnion(Set b){	
-		Set temp;
-		list<int>::iterator p1;
-		list<int>::iterator p2;
-		list<int>::iterator pTemp;
-		p1 = elements.begin();
-		p2 = b.elements.begin();
-		pTemp = temp.elements.begin();
+	Set setUnion(Set b){	// обеднання параметром передається множина, з якою в нас 
+		// має відбутись обеднання множини, функцію якої ми викликаєм
+		Set temp;   	// створюєм обект класу множина, тимчасовий, в який ми додамо елементи
+		// данної множини та множини що передалась параметром
+		list<int>::iterator p1; // ініціалізуємо ітератор
+		list<int>::iterator p2; // ініціалізуємо ітератор
+		list<int>::iterator pTemp; // ініціалізуємо ітератор
+		p1 = elements.begin(); // встановлюєм його в початок данної множини
+		p2 = b.elements.begin(); // встановлюємо в початок множини що передалась параметром
+		pTemp = temp.elements.begin(); // ітератор тимчасово створеної множини в початок
 		
-		while(p1!=elements.end()){
-			temp.insert(*p1);
+		while(p1!=elements.end()){ // проходим по поточній множині 
+			temp.insert(*p1); // вставляємо елементи в тимчасову множину
 			p1++;
 		}
 		
-		while(p2!=b.elements.end()){
+		while(p2!=b.elements.end()){ // аналогічно з множиною що передалась в цю функцію параметром
 			temp.insert(*p2);
 			p2++;
 		}
-		return temp;
+		return temp; // функція повертає тимчасову множину множину  
 		
 	};
 
@@ -60,11 +63,13 @@ int main(){
 
 	Set a;
 	Set b;
+	cout <<"A :"<<endl;              
 	a.insert(10);
 	a.insert(20);
 	a.insert(20);
-	a.insert(4);
+	a.insert(4); 
 	a.describe();
+	cout <<"B :"<<endl;
 	b.insert(1);
 	b.insert(10);
 	b.insert(2);
@@ -72,7 +77,7 @@ int main(){
 	b.describe();
 	cout<<"union";
 	Set c;
-	c = a.setUnion(b);
+	c = a.setUnion(b); // setUnion поверне тимчасову множину що складається з елементів множини А та И
 	c.describe();
 	return 0;
 }
